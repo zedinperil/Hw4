@@ -1,0 +1,406 @@
+\documentclass[10pt]{exam}
+
+\printanswers
+
+
+\usepackage{epsfig,amssymb}
+\usepackage{xcolor}
+\definecolor{darkred}{rgb}{0.5,0,0}
+\definecolor{darkgreen}{rgb}{0,0.5,0}
+\usepackage{hyperref}
+\usepackage{fullpage}
+\usepackage{tikz}
+\pagestyle{empty} 
+
+\usepackage{listings}
+
+\setlength{\parindent}{0pt} %
+\setlength{\parskip}{.25cm}
+\newcommand{\comment}[1]{}
+\boxedpoints
+
+\addpoints
+
+
+
+\usepackage{amsmath}
+\usepackage{algorithm2e}
+\usepackage{url}
+\usepackage{enumitem}
+\usepackage{graphics}
+
+\pagestyle{headandfoot}
+\firstpageheader{\Large CSCE 235/235H}{{\Large Assignment 3}}{\Large Spring 2017}
+
+\begin{document}
+
+\hrule
+
+\vspace{.50cm} Name \rule{2in}{.001in} \hfill NUID
+\vspace{.50cm} \rule{2in}{.001in} \hfill 
+\\ Grader \rule{2in}{.001in}
+
+\textbf{Instructions} Follow instructions \emph{carefully}, failure to do so may result in points being deducted.  
+\begin{itemize}
+
+  \item Use US Letter (8.5 x 11.0 inches) size papers to prepare your solutions. Pages teared out from notebooks are not acceptable.
+  \item Print out a copy of this cover sheet and staple it to the front of your assignment.  
+  \item Be sure to show sufficient work to justify your answer(s).
+  \item You will receive 5 bonus points for typesetting your assignment using \LaTeX.  
+  \item If you use \LaTeX to compose your solutions, then submit your \LaTeX source code via handin. In addition to this, you MUST submit a hard copy of your solutions at the beginning of the lecture on the due date.
+  \item The CSE academic dishonesty policy is in effect (see \url{http://cse.unl.edu/academic-integrity-policy}).   
+
+\end{itemize}
+
+
+
+
+\begin{center}
+{\small \gradetable[v] }
+\end{center}
+
+
+
+\newpage
+\begin{questions}
+
+\question[3] (Rosen 2.1.10) Determine whether these statements are true or false.
+\begin{enumerate} [label=(\alph*)]
+  \item $\emptyset \in \{\emptyset\}$
+  
+  %\item $\emptyset \in \{\emptyset, \{\emptyset\}\}$
+  \item $\{\emptyset\} \in \{\emptyset\}$
+  \newline True, the set is one element, the empty set. So the empty set is an element of the	set.
+  \item $\{\emptyset\} \in \{\{\emptyset\}\}$
+  \newline False, the empty set does not contain the empty set inside of it.
+  \item $\{\emptyset\} \subsetneq \{\emptyset, \{\emptyset\}\}$
+  \newline TRUE, the set is a set with an empty set. The empty set is contained.
+  \item $\{\{\emptyset\}\} \subsetneq \{\emptyset, \{\emptyset\}\}$
+  \newline TRUE, the set that contains the empty set is a subset of the set.
+  \item $\{\{\emptyset\}\} \subsetneq \{\{\emptyset\}, \{\emptyset\}\}$
+  \newline FALSE, the sets are equal subsets.
+\end{enumerate}
+
+
+\question[3] (Rosen 2.1.18) Find two sets A and B such that $A \in B$ and $A \subseteq B$.
+ \newline $ A = \{1\}$ and $ B = \{1,{1}\}$. This way, $A \in B$ so $A \subseteq B$
+\question[4] (Rosen 2.1.20) What is the cardinality of each of these sets?
+\begin{enumerate} [label=(\alph*)]
+ \item $\varnothing$
+ \newline 0
+ \item $\{\varnothing\}$
+ \newline 1
+ \item $\{\varnothing, \{\varnothing\}\}$
+ \newline 2
+ \item $\{\varnothing, \{\varnothing\}, \{\varnothing, \{\varnothing\}\}\}$
+ \newline 3
+ \end{enumerate}
+ 
+ 
+ \question[2] (Rosen 2.1.23) How many elements does each of these sets have where a and b are distinct elements?
+ \begin{enumerate} [label=(\alph*)]
+ \item $P(\{\varnothing, a, \{a\}, \{\{a\}\}\})$
+ \newline $ 2^4 = 16$
+  \item $P(P(\varnothing))$
+ \newline $ 2^0 = 1$ so $ 2^1 = 2$
+ \end{enumerate}
+
+\question[2] Let $A, B$ be sets such that $|A| = n, |B| = m$.  What is the cardinality of $\mathcal{P}(A \times B)$?
+\newline so $|A \times B| = n * m$. Number of subsets is $2^(^m^*^n^)$
+
+\question [4] Let $A^n$ denote the cartesian product of a set $A$ with itself $n$ times, that is:
+  	$$A^n = \underbrace{A \times A \times \cdots \times A}_n$$
+\begin{parts}
+  \part What is the cardinality of $A^n$?
+  \newline cardinality of $A^n$ = $A^n$
+  \part What is the cardinality of $\mathcal{P}(A^n)$?
+  \newline cardinality of $P(A) = 2^n$, so cardinality of $P(A^n) = ({
+  	2^A}^n)$
+\end{parts}
+
+\question[8] Let $A = \{1, 2, 6\}, B =\{0, 3\}$, and $C = \{1,
+3, 9\}$.  Find the following
+\begin{enumerate} [label=(\alph*)]
+ \item $A \times C$
+ \newline $\{1,2,6\} \times \{1,3,9\} = \{(1,1),(1,3),(1,9),(2,1),(2,3),(2,9),(6,1),(6,3),(6,9)\}$
+ \item $A \times B \times C$
+ \newline $\{1,2,3\} \times \{0,3\} \times \{1,3,9\} = \{(1,0,1),(1,0,3),(1,0,9),(1,3,1),(1,3,3),(1,3,9),(2,0,1),(2,0,3),(2,0,9),(2,3,1),(2,3,3),(2,3,9),(3,0,1),(3,0,3),(3,0,9),(3,3,1),(3,3,3),(3,3,9)\}$
+ \item $B \times B \times B$
+ \newline $\{0,3\} \times \{0,3\} \times \{0,3\} = \{(0,0,0),(0,0,3),(0,3,0),(0,3,3),(3,0,0),(3,0,3),(3,3,0),(3,3,3)\}$
+ \item What would be the cardinality of $A \times B \times C \times B \times A$?
+ \newline $3 * 2 * 3 * 2 * 4 = 144$
+\end{enumerate}
+
+\question[4] (Rosen 2.2.17) Show that if $A$ and $B$ are sets, then $\overline{A \cap B \cap C} = \overline{A} \cup \overline{B} \cup \overline{C}$
+
+\begin{parts}
+  \part by showing each side is a subset of the other side.
+  \newline $\overline{A \cap B \cap C}$
+  \newline $\overline{(A \cap B) \cap C)}$ Grouping
+  \newline $\overline{A} \cup \overline{B} \cap \overline{C}$ DeMorgan's Law
+  \newline $\overline{A} \cup \overline{B \cap C}$ Grouping
+  \newline $\overline{A} \cup \overline{B} \cup \overline{C}$ DeMorgan's Law
+  \newline We have reached equivalent statements.
+  \newline $\overline$ 
+  \part using a membership table.
+  \begin{tabular}{ l | l | l | l | l | l | l | l | l }
+  \hline			
+  A & B & C & $\overline{A}$ & $\overline{B}$ & $\overline{C}$ & $A \cap B \cap C$ & $\overline{A \cap B \cap C}$ & $\overline{A} \cup \overline{B} \cup \overline{C}$ \\
+  \hline
+  1&1&1&0&0&0&1&0&0 \\
+  1&1&0&0&0&0&0&1&1 \\
+  1&0&1&0&1&0&0&1&1 \\
+  0&1&1&1&0&0&0&1&1 \\
+  1&0&0&0&1&1&0&1&1 \\
+  0&1&0&1&0&1&0&1&1 \\
+  0&0&1&1&1&0&0&1&1 \\
+  0&0&0&1&1&1&0&1&1 \\
+  \hline  
+  \end{tabular}
+  \newline This table shows that the two statements are the same for all cases.
+\end{parts}
+
+\question[4] (Rosen 2.2.18) Let A, B, and C be sets. Without using a membership table prove the following equivalence. \textbf{You must explicitly state the set identities used in the proof}.
+\begin{enumerate} [label=(\alph*)]
+ \item $(A \cup B) \subseteq (A \cup B \cup C)$
+ \newline $(A \cup B)$
+ \newline $\{x|x\in A \lor x\in B\}$ Definition of Set Union
+ \newline $\{x|x\in A \lor x\in B \lor x\in C\}$ Identity Law of Addition
+ \newline $(A \cup B \cup C)$ Definition Of Set Union
+ \item $(A \cap B \cap C) \subseteq (A \cap B)$
+ \newline $(A \cap B \cap C)$
+ \newline $\{x| x\in A \land x\in B \land x\in C\}$ Definition Of Set Intersection
+ \newline $\{x| x\in A \land x\in B\}$ Simplification Law
+ \newline $(A \cap B)$ Definition of Set Intersection
+ 
+ \newline 
+ \end{enumerate}
+
+
+\question[3] (Rosen 2.2.36) Without using a membership table show that if $A$ and $B$ are sets, then prove the following equivalence. \textbf{You must explicitly state the set identities used in the proof}.
+\newline $A \oplus  B = (A - B) \cup (B - A)$
+\newline $\{x| (x\in A) \oplus (x\in B)\}$ Definition of Set Exclusive Or
+\newline $\{x| (x\in A) \land (x\notin B) \lor (x\notin A) \land (x\in B)\}$ Equivalence Law
+\newline $(A \cap \overline{B}) \cup (B \cap \overline{A})$ Definition of the set
+\newline $(A-B) \cup (B-A)$ Definition of logical conjunction operator
+\newline the statement has been proven
+\newline 
+
+\question[3] (Rosen 2.2.38) Without using a membership table show that if $A$ and $B$ are sets, then prove the following equivalence. \textbf{You must explicitly state the set identities used in the proof}.
+\newline $(A \oplus  B) \oplus B  = A$
+\newline $A \oplus (B \oplus B)$ Associative Laws
+\newline $(B \oplus B) = \emptyset$ Anything $\oplus$ itself is the null set
+\newline $(A \oplus \emptyset)$ Associative Law
+\newline $\{x|(x\in A) \land (x\notin \emptyset) \lor (x\in \emptyset)\land(x\notin A)\}$ Definition of exclusive or set
+\newline$\{x|(x\in\emptyset)\land(x\notin A)\} = \emptyset$
+\newline$\{x|(x\notin \emptyset)\} = U$
+\newline$(A \lor U) = A$ Identity Law
+\newline These are the same statements
+
+\question[14] Let $S = \{1, 2\}$ and $T = \{a, b, c\}$.
+  \begin{parts}
+    \part How many unique functions are there mapping $S \rightarrow T$?
+    $3^2 = 9$
+    \part How many unique functions are there mapping $T \rightarrow S$?
+    $2^3 = 8$
+    \part How many \emph{onto} (surjective) functions are there mapping $S
+    \rightarrow T$?
+    \newline 0
+    \part How many \emph{onto} (surjective) functions are there mapping $T
+    \rightarrow S$ (hint: think of how many \emph{non} onto functions there are)?
+    \newline 6
+    \part How many \emph{one-to-one} (injective) functions are there mapping $S
+    \rightarrow T$?
+    \newline 6
+    \part How many \emph{one-to-one} (injective) functions are there mapping $T
+    \rightarrow S$?
+    \newline 0
+    \part Let $f: S\rightarrow T$, is it possible to define $f^{-1}$?  Why or why not?
+    \newline NO. An function can only be inverse if it is both one-to-one and on-to
+ \end{parts}
+
+\question[10] Determine whether each of the functions below is
+onto, and/or one-to-one, prove your answers.
+\begin{enumerate}
+ \item[(a)] $f: \mathbb{Z} \rightarrow \mathbb{Z}, f(x) = x - 1$
+ \newline Proof of one-to-one by contrapositive
+ \newline $f(x_1) = f(x_2)$
+ \newline $x_1 - 1 = x_2 -1$
+ \newline $x_2 = x_2$
+ 
+ \newline Proof of onto by Contradiction
+ \newline $y=x-1$
+ \newline $y+1=x$
+ \newline Now take our definition of x and use to show that there is an contradiction where $f(x) = y$, but our given statement is that $f(x) not equal to y$
+ 
+ \newline $f(x) = y+1-1 = y$
+ \newline We meet a contradiction where $f(x) = y$. By contradiction, f is onto
+ \item[(b)] $f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = -3x^2 + 7$
+ \newline Proof by counterexample
+ \newline $f(1)$ and $f(-1)$ produce the same results
+ \newline Proof by counterexample
+ \newline Solving for y produces $ x =\sqrt{(-y+7/3)}$. Any value over 7 produces an imaginary answer. 
+ \newline So f is not onto
+ \item[(c)] $f: \mathbb{Z} \rightarrow \mathbb{Z}, f(x) = \lceil x \rceil$
+ \newline Proof by contrapositive:
+ \newline $f(x_1) = f(x_2)$
+ \newline In the case of all integers, ceiling of an int is just that int, therefore they are equal. Therefore, f is one-to-one
+ \newline Proof by contradiction:
+ \newline The goal is to reach a contradiction assuming $f(x)$ is not equal to the ceiling of x.
+ \newline the ceiling of x for all integers is just x. Solving for y is y=x
+ \newline $f(x) = y$ right away, which reaches the contradiction. Therefore, f is onto
+ \item[(d)] $f: \mathbb{R} \rightarrow \mathbb{R}, f(x) = \lceil x \rceil$
+ \newline Proof by counterexample:
+ \newline $f(1.4) = 2$ and $f(1.6) = 2$
+ \newline Not one-to-one
+ \newline Proof by counterexample:
+ \newline f(x) cannot equal anything other than an integer. Therefore, you are unable to get any real number that is not an integer. Not onto.
+ \item[(e)] $f: \mathbb{R} \rightarrow \mathbb{Z}, f(x) = \lceil x \rceil$
+ \newline Proof by counterexample:
+ \newline $f(1.4) = 2$ and $f(1.6) = 2$
+ \newline Not one-to-one
+ \newline Proof by contradiction:
+ \newline The goal is to reach a contradiction assuming $f(x)$ is not equal to the ceiling of x.
+ \newline the ceiling of x for all integers is just x. Solving for y is y=x
+ \newline $f(x) = y$ right away, which reaches the contradiction. Therefore, f is onto
+ 
+\end{enumerate}
+
+\question[8] Determine whether each of the functions below is
+onto, and/or one-to-one for $f: \mathbb{Z} \rightarrow \mathbb{Z}$, prove your answers.
+\begin{parts}
+ \part $f(x) = 5x - 3$
+ \newline Proof by contrapositive
+ \newline Prove that $f(x_1) = f(x_2)$
+ \newline $5x_1 -3 = 5x_2 -3$
+ \newline $x_1 = x_2$
+ \newline f is one-to-one
+ Proof by contradiction
+ \newline $(x = (y+3)/5)$
+ \newline Now contradict the assumption made that $f(x)$ is not equal to y
+ \newline $f(x) = (5(y+3))/5 -3 = y$
+ \newline Contradiction has been made, so f(x) must equal y. f is onto.
+ \part $f(x) = 2x^3$
+ \newline Proof by contrapositive:
+ \newline $2(x_1)^3 = 2(x_2)^3$
+ \newline $x_1 = x_2$
+ \newline f is one-to-one
+ \newline Proof by contradiction
+ \newline $x = \sqrt[3]{y/2}$
+ \newline $f(x) = 2{(\sqrt[3]{y/2})}^3 = y$
+ \newline f is onto
+ 
+ \part $f(x) = (2x - 2)^2$
+ \newline Not one-to-one: Counterexample
+ \newline $f(0) and f(2)$ results the same values
+ \newline Not onto: Counterexample
+ \newline $x = (\sqrt{y} - 2)/2$
+ \newline At any point y is negative, the number is imaginary.
+ \newline f is not onto
+ \part $f(x) = \frac{\sqrt{x}}{6}$
+ \newline Neither. f is not a function.
+\end{parts}
+
+\question[8] Determine whether each of the functions below is
+onto, and/or one-to-one for $f: \mathbb{R} \rightarrow \mathbb{R}$, prove your answers.
+\begin{parts}
+ \part $f(x) = 5x - 3$
+ \newline Proof by contrapositive
+ \newline Prove that $f(x_1) = f(x_2)$
+ \newline $5x_1 -3 = 5x_2 -3$
+ \newline $x_1 = x_2$
+ \newline f is one-to-one
+ Proof by contradiction
+ \newline $(x = (y+3)/5)$
+ \newline Now contradict the assumption made that $f(x)$ is not equal to y
+ \newline $f(x) = (5(y+3))/5 -3 = y$
+ \newline Contradiction has been made, so f(x) must equal y. f is onto.
+ \part $f(x) = 2x^3$
+ \newline Proof by contrapositive:
+ \newline $2(x_1)^3 = 2(x_2)^3$
+ \newline $x_1 = x_2$
+ \newline f is one-to-one
+ \newline Proof by contradiction
+ \newline $x = \sqrt[3]{y/2}$
+ \newline $f(x) = 2{(\sqrt[3]{y/2})}^3 = y$
+ \newline f is onto
+ \part $f(x) = (2x - 2)^2$
+ \newline Not one-to-one: Counterexample
+ \newline $f(0) and f(2)$ results the same values
+ \newline Not onto: Counterexample
+ \newline $x = (\sqrt{y} - 2)/2$
+ \newline At any point y is negative, the number is imaginary.
+ \newline f is not onto
+ \part $f(x) = \frac{\sqrt{x}}{6}$
+ \newline Neither. f is not a function
+\end{parts}
+
+
+\question[8] Define the following functions (assume that the
+domains/codomains are defined such that each composition is valid):
+$f(x) = 2x, g(x) = \frac{x}{(1+x)}, h(x) = \sqrt{x}$. Find
+\begin{enumerate} [label=(\alph*)]
+ \item $f\circ g \circ h$
+  \newline $g(h(x)) = (\sqrt{x})/(1+\sqrt{x})$
+ \newline $f(g(h(x))) = 2((\sqrt{x})/(1+\sqrt{x}))$
+ \item $h \circ g \circ f$
+ \newline $g(f(x)) = (2x)/(1+2x)$
+ \newline $h(g(f(x))) = \sqrt{(2x)/(1+2x)}$
+ \item $f \circ f$
+ \newline $f(f(x)) = 4x$
+ \item $g \circ g$
+ \newline $g(g(x)) = ((1/1+x))/(1+(1/1+x))$
+\end{enumerate}
+
+\question[8] Find inverses of the following functions (assume
+that the domains/codomains are defined such that each function is a
+bijection).
+\begin{enumerate} [label=(\alph*)]
+ \item $f(x) = 5x - 3$
+ \newline $y = 5x - 3$
+ \newline $(y+3)/5 = x$
+ \newline $f^-1(x) = (x+3)/5$
+ \item $f(x) = 2x^3$
+ \newline $y = 2x^3$
+ \newline $sqrt[3]{y/2}=x$
+ \newline $f^-1(x) = sqrt[3]{y/2}$
+ \item $f(x) = (2x - 2)^2$
+ \newline $y = (2x-2)^2$
+ \newline $x = (\sqrt{y} - 2)/2$
+ \newline $f^-1(x) = (\sqrt{x} - 2)/2$
+ \item $f(x) = \frac{\sqrt{x}}{6}$
+ \newline $y = \frac{\sqrt{x}}{6}$
+ \newline $x = (6y)^2$
+ \newline $f^-1(x) = (6x)^2$
+ \end{enumerate}
+
+\question[4] Let $f(x)$ and $g(x)$ be two linear functions (a function is \emph{linear} if there exist
+$a, b \in \mathbb{R}$ such that $f(x) = ax + b$). 
+ \begin{enumerate} [label=(\alph*)]
+ \item Prove or disprove: $f\circ g = g\circ f$.
+ \item Prove or disprove: $f \circ g$ and $g \circ f$ are linear functions.
+ \end{enumerate}
+
+
+\question (Bonus 5 points) (Rosen 2.1.46) This exercise presents Russell's paradox. Let S be the set that contains a set $x$ if the set $x$ does not belong to itself, so that $S = \{x | x  \notin x\}$.
+\begin{enumerate} [label=(\alph*)]
+ \item Show the assumption that S is a member of S leads to a contradiction.
+\item Show the assumption that S is not a member of S leads to a contradiction.
+ \end{enumerate}
+By parts (a) and (b) it follows that the set S cannot be defined as it was. This paradox can be avoided by restricting the types of elements that sets can have.
+
+
+\question (Bonus 5 points) (Rosen 2.3.60) In asynchronous transfer mode (ATM) (a communications protocal used on backbone networks), data are organized into cells of 53 bytes. How many ATM cells can be transmited in 10 seconds over a link operating at the following rates? (Hint: See Example 28 in section 2.3 of the textbook.)
+
+\begin{enumerate} [label=(\alph*)]
+ \item  $128$ kilobits per second ($1$ kilobit $= 1000$ bits)
+ \item $300$ kilobits per second
+ \item  $1$ megabit per second ($1$ megabit $= 1,000,000$ bits)
+\end{enumerate}
+
+\question (Bonus 5 points) \textbf{You will receive bonus 5 points for typesetting your solutions using \LaTeX.}
+
+
+\end{questions}
+
+\end{document} 
