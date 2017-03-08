@@ -129,8 +129,10 @@ create table Assets (
  insert into Address(addressId, personCode, street, city, state, country, zipcode) values(2,'bluman','7 Gravel Lane', 'Teufort','AZ','USA','10907');
  insert into Address(addressId, personCode, street, city, state, country, zipcode) values(3,'grayman','Location Unknown','Teufort','AZ','USA','');
 
+ insert into Person(personId, personCode, firstName, lastName, persontype, secId)values(1,'');
+ insert into Person(personId, personCode, firstName, lastName, persontype, secId)values(2,'');
+ insert into Person(personId, personCode, firstName, lastName, persontype, secId)values(3,'');
 
-  
   ###
 create table BandMember (
   bandMemberId int not null primary key auto_increment,
