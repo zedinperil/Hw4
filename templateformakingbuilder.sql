@@ -19,7 +19,12 @@ create table Person (
   firstName varchar(50),
   lastName varchar(50),
   persontype varchar(50),
-  secId varchar(50)
+  secId varchar(50),
+  street varchar(200),
+  city varchar(200),
+  state varchar(200),
+  country varchar(200),
+  zip varchar(200)
 )engine=InnoDB,collate=latin1_general_cs;
 
 create table Emails (
@@ -29,18 +34,6 @@ create table Emails (
   FOREIGN KEY personCode(personCode) REFERENCES Person(personCode)
 )engine=InnoDB,collate=latin1_general_cs;
 
-create table Address (
-  addressId int not null primary key auto_increment,
-  personCode varchar(50) not null,
-  FOREIGN KEY personCode(personCode) REFERENCES Person(personCode),
-  street varchar(200),
-  city varchar(200),
-  state varchar(200),
-  country varchar(200),
-  zip varchar(200)
-)engine=InnoDB,collate=latin1_general_cs;
-
-	
   create table Portfolio ( 
   portfolioCode varchar(50) not null primary key,
   ownerCode varchar(50) not null,
@@ -57,14 +50,10 @@ create table Address (
   aggRisk double
   )engine=InnoDB,collate=latin1_general_cs;
      
-create table AssetsTypes (
-  assetType varchar(50) not null primary key
-  )engine=InnoDB,collate=latin1_general_cs;
-     
+  
 create table AssetsList (
   assetCode varchar(50) not null primary key,
-  assetType varchar(50) not null,
-  FOREIGN KEY assetType(assetType) REFERENCES AssetsTypes(assetType)
+  assetType varchar(50) not null
   )engine=InnoDB,collate=latin1_general_cs;
 
 create table Assets (
@@ -86,8 +75,7 @@ create table PrivateInvestment (
   privateInvestmentId int not null primary key auto_increment,
   assetCode varchar(50) not null,
   FOREIGN KEY assetCode(assetCode) REFERENCES AssetsList(assetCode),
-  assetType varchar(50) not null,
-  FOREIGN KEY assetType(assetType) REFERENCES AssetsTypes(assetType),
+  assetType varchar(50) not null, 
   assetName varchar(50),
   quarterlyDividend double,
   baseRateOfReturn double,
@@ -100,7 +88,6 @@ create table Stock (
   assetCode varchar(50) not null,
   FOREIGN KEY assetCode(assetCode) REFERENCES AssetsList(assetCode),
   assetType varchar(50) not null,
-  FOREIGN KEY assetType(assetType) REFERENCES AssetsTypes(assetType),
   assetName varchar(50),
   quarterlyDividend double,
   baseRateOfReturn double,
@@ -114,7 +101,6 @@ create table Deposit (
   assetCode varchar(50) not null,
   FOREIGN KEY assetCode(assetCode) REFERENCES AssetsList(assetCode),
   assetType varchar(50) not null,
-  FOREIGN KEY assetType(assetType) REFERENCES AssetsTypes(assetType),
   assetName varchar(50),
   apr double
   )engine=InnoDB,collate=latin1_general_cs;
@@ -122,31 +108,22 @@ create table Deposit (
   
 
 
- insert into Person(personCode, firstName, lastName, persontype, secId) values('redman','Redmond','Mann','J','sec173');
- insert into Person(personCode, firstName, lastName, persontype, secId) values('bluman','Blutarch','Mann','','');
- insert into Person(personCode, firstName, lastName, persontype, secId) values('grayman','Gray','Mann','E','sec682');
- insert into Person(personCode, firstName, lastName, persontype, secId) values('','none','','','');
+ insert into Person(personCode, firstName, lastName, persontype, secId, street, city, state, country, zip) values('redman','Redmond','Mann','J','sec173','7 Gravel Lane', 'Teufort','AZ','USA','10907');
+ insert into Person(personCode, firstName, lastName, persontype, secId, street, city, state, country, zip) values('bluman','Blutarch','Mann','','','7 Gravel Lane', 'Teufort','AZ','USA','10907');
+ insert into Person(personCode, firstName, lastName, persontype, secId, street, city, state, country, zip) values('grayman','Gray','Mann','E','sec682','Location Unknown','Teufort','AZ','USA','');
+ insert into Person(personCode, firstName, lastName, persontype, secId, street, city, state, country, zip) values('','none','','','','','','','','');
 
  insert into Emails(emailId, personCode, email) values (1,'redman','killtheblus@gravelpit.co');
  insert into Emails(emailId, personCode, email) values (2,'bluman','blutarchmann@gannco.com');
  insert into Emails(emailId, personCode, email) values (3,'bluman','killthereds@gravelpit.co');
  insert into Emails(emailId, personCode, email) values (4,'grayman','owner@mannco.com');
   
- insert into Address(addressId, personCode, street, city, state, country, zip) values(1,'redman','7 Gravel Lane', 'Teufort','AZ','USA','10907');
- insert into Address(addressId, personCode, street, city, state, country, zip) values(2,'bluman','7 Gravel Lane', 'Teufort','AZ','USA','10907');
- insert into Address(addressId, personCode, street, city, state, country, zip) values(3,'grayman','Location Unknown','Teufort','AZ','USA','');
-
-  
  insert into Portfolio(portfolioCode, ownerCode, managerCode, beneficiaryCode, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values('PT001','redman','grayman','grayman',20,1061.89,123674.20,21237.78,1.9959);
  insert into Portfolio(portfolioCode, ownerCode, managerCode, beneficiaryCode, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values('PT002','bluman','grayman','grayman',20,966.66,112790.50,19333.23,2.5440);
  insert into Portfolio(portfolioCode, ownerCode, managerCode, beneficiaryCode, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values('PT003','redman','redman','',50, 0.80, 40, 40, 9.0150);
  insert into Portfolio(portfolioCode, ownerCode, managerCode, beneficiaryCode, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values('PT004','bluman','grayman','', 10, 2, 40, 40, 9.0150);
  insert into Portfolio(portfolioCode, ownerCode, managerCode, beneficiaryCode, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values('PT005','grayman','grayman','grayman',20,128439.51,1579300,568790.15,7.7155);
- 
- insert into AssetsTypes(assetType) values('P');
- insert into AssetsTypes(assetType) values('S');
- insert into AssetsTypes(assetType) values('D');
- 
+
  insert into AssetsList(assetCode, assetType) values('GRAVEL','S');
  insert into AssetsList(assetCode, assetType) values('TWOSHORTS','P');
  insert into AssetsList(assetCode, assetType) values('RIRA','D');
@@ -176,7 +153,6 @@ create table Deposit (
 ##
 select * from Portfolio;
 select * from Person;
-select * from AssetsTypes;
 select * from AssetsList;
 select * from Assets;
 select * from PrivateInvestment;
@@ -184,5 +160,13 @@ select * from Stock;
 select * from Deposit;
 select * from Address;
 select * from Emails;
+
+select * from Deposit d join AssetsList l on d.assetCode= l.assetCode;
+select * from PrivateInvestment p join AssetsList l on p.assetCode= l.assetCode;
+select * from Stock s join AssetsList l on s.assetCode= l.assetCode;
+select * from Assets a join AssetsList l on a.assetCode= l.assetCode join Deposit d on d.assetType=l.assetType; 
+select * from Assets a join Portfolio p on a.portfolioCode=p.portfolioCode where p.ownerCode='redman';
+#is number 7 once you fix the count. also, this is easily ported to 8 once we figure out some other stuff
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetCode) as NumOfAssets from Assets a join Portfolio p on a.portfolioCode=p.portfolioCode join Person q on q.personCode=p.ownerCode ;
 
 commit;
