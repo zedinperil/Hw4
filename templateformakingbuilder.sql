@@ -46,7 +46,7 @@ create table Address (
   ownerCode varchar(50) not null,
   managerCode varchar(50) not null, 
   beneficiaryCode varchar(50),
-  personCode varchar(50),
+
   FOREIGN KEY ownerCode(ownerCode) REFERENCES Person(personCode),
   FOREIGN KEY managerCode(managerCode) REFERENCES Person(personCode),
   FOREIGN KEY beneficiaryCode(beneficiaryCode) REFERENCES Person(personCode),
@@ -174,5 +174,15 @@ create table Deposit (
 #MAYBE WE NEED SOME FOREIGN KEYS REFERENCING OR MAYBE CONSTRAINTS OR INDEXES
   ###
 ##
+select * from Portfolio;
+select * from Person;
+select * from AssetsTypes;
+select * from AssetsList;
+select * from Assets;
+select * from PrivateInvestment;
+select * from Stock;
+select * from Deposit;
+select * from Address;
+select * from Emails;
 
 commit;
