@@ -20,11 +20,13 @@ delete from Emails where personId = 2;
 delete from Person where personId = 2;
 #06. A query to create a person record
 select * from Person;
-insert into Person (name) values ('Ubisoft');
-insert into game (name, publisherId) values ('Assassin\'s Creed', 
-  (select publisherId from publisher where name = 'Ubisoft'));
-select * from game;  
+insert into Person (PersonId) values (5);
+insert into Person (personCode, firstName, lastName, personType, secId, street, city, state, country, zip) values 
+				   ('312', 'Meh', 'moo', 'S', 'ma', '7420 Cooper Ave', 'ya mum', 'Africa', '69269');
+    
 #07. A query to get all the assets in a particular portfolio
+select * from Assets a JOIN Portfolio p ON p.portfolioId = a.portfolioId
+JOIN AssetsList L ON L.assetListId = a.assetListId;
 
 #08. A query to get all the assets of a particular person
 
@@ -35,7 +37,6 @@ select * from game;
 #11. A query to associate a particular asset with a particular portfolio
 
 #12. A query to find the total number of portfolios owned by each person
-	select * from Assets a join Portfolio p on a.portfolioCode=p.portfolioCode where p.ownerCode='redman';
 
 #13. A query to find the total number of portfolios managed by each person
 
