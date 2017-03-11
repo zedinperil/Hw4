@@ -128,7 +128,7 @@ create table Deposit (
  
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(1,2,1, 12, 1.15, 18785.15, 109081.20, 17.22);
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(2,4,1, 100, 8.35, 2452.63, 14593.00, 16.81);
- insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(3,2,2, 100, 1.15, 15654.29, 90901.00, 17.22);
+ insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(3,2,2, 8, 1.15, 15654.29, 90901.00, 17.22);
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(4,4,2, 150, 8.35, 3678, 21889.5, 16.81);
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(5,1,3, 10000, 9.02, 40, 40, 100);
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(6,1,4, 10000, 9.02, 40, 40, 100);
@@ -175,5 +175,6 @@ commit;
 
 #15
  insert into AssetsList(assetListId, assetCode, assetType, assetName) values(5,'HOME','P','Homeboy Hoagies');
- insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(10,5,1, 110, 1.15, 18785.15, 109081.20, 17.22);
- select p.portfolioCode as portfolio, sum(if(a.assetListId=v.assetListId,a.assetModifier,0)) as PercentStake, q.personCode as OwnerCode from Portfolio p join Assets a on p.portfolioId=a.portfolioId join AssetsList l on l.assetListId join PrivateInvestment v on v.assetListId=l.assetListId join Person q on q.personId=p.ownerId where l.assetType='P' group by p.portfolioCode having sum(if(a.assetListId=v.assetListId,a.assetModifier,0))>100;
+ insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(10,5,1, 92, 1.15, 18785.15, 109081.20, 17.22);
+ insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(11,5,2, 92, 1.15, 18785.15, 109081.20, 17.22);
+ select p.portfolioCode as portfolio, sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0)) as PercentStake, q.personCode as OwnerCode from Portfolio p join Assets a on p.portfolioId=a.portfolioId join AssetsList l on l.assetListId join Person q on q.personId=p.ownerId where l.assetType='P' group by p.portfolioCode having sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0))>100;
