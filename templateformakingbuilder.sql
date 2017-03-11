@@ -15,7 +15,7 @@ drop table if exists Person;
 
 create table Person (
   personId integer not null primary key auto_increment,
-  personCode varchar(10) not null,
+  personCode varchar(10) not null unique,
   firstName varchar(10) not null,
   lastName varchar(50) not null,
   persontype varchar(50),
@@ -29,14 +29,14 @@ create table Person (
 
 create table Emails (
   emailId int not null primary key auto_increment,
-  email varchar(100) not null,
+  email varchar(100) not null unique,
   personId int not null,
   FOREIGN KEY (personId) REFERENCES Person(personId)
 )engine=InnoDB,collate=latin1_general_cs;
 
   create table Portfolio (
   portfolioId integer not null primary key auto_increment,
-  portfolioCode varchar(10) not null,
+  portfolioCode varchar(10) not null unique,
   ownerId int not null,
   managerId int not null, 
   beneficiaryId int,
@@ -53,9 +53,9 @@ create table Emails (
   
 create table AssetsList (
   assetListId integer not null primary key auto_increment,
-  assetCode varchar(15) not null,
+  assetCode varchar(15) not null unique,
   assetName varchar(50) not null,
-  assetType varchar(1) not null
+  assetType varchar(1) not null 
   )engine=InnoDB,collate=latin1_general_cs;
 
 create table Assets (
@@ -98,8 +98,6 @@ create table Deposit (
   depositId int not null primary key auto_increment,
   assetListId int not null,
   FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
-  assetType varchar(10) not null,
-  assetName varchar(50) not null,
   apr double not null
   )engine=InnoDB,collate=latin1_general_cs;
   
@@ -122,10 +120,10 @@ create table Deposit (
  insert into Portfolio(portfolioId, portfolioCode, ownerId, managerId, beneficiaryId, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values(4, 'PT004',2,3,4, 10, 2, 40, 40, 9.0150);
  insert into Portfolio(portfolioId, portfolioCode, ownerId, managerId, beneficiaryId, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values(5, 'PT005',3,3,3,20,128439.51,1579300,568790.15,7.7155);
 
- insert into AssetsList(assetListId, assetCode, assetName, assetType) values(1,'GRAVEL','S','GravelPit Gravel Pits');
- insert into AssetsList(assetListId, assetCode, assetName, assetType) values(2,'TWOSHORTS','P','Shorts Eatery(Family Owned)');
- insert into AssetsList(assetListId, assetCode, assetName, assetType) values(3,'RIRA','D', 'Roth IRA');
- insert into AssetsList(assetListId, assetCode, assetName, assetType) values(4,'MANNCO','S','MannCo');
+ insert into AssetsList(assetListId, assetCode, assetType, assetName) values(1,'GRAVEL','S','GravelPit Gravel Pits');
+ insert into AssetsList(assetListId, assetCode, assetType, assetName) values(2,'TWOSHORTS','P','Shorts Eatery(Family Owned)');
+ insert into AssetsList(assetListId, assetCode, assetType, assetName) values(3,'RIRA','D', 'Roth IRA');
+ insert into AssetsList(assetListId, assetCode, assetType, assetName) values(4,'MANNCO','S','MannCo');
 
  
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(1,2,1, 12, 1.15, 18785.15, 109081.20, 17.22);
@@ -163,7 +161,14 @@ select * from Emails;
 #select * from Stock s join AssetsList l on s.assetCode= l.assetCode;
 #select * from Assets a join AssetsList l on a.assetCode= l.assetCode join Deposit d on d.assetType=l.assetType; 
 #select * from Assets a join Portfolio p on a.portfolioCode=p.portfolioCode where p.ownerCode='redman';
-#is number 7 once you fix the count. also, this is easily ported to 8 once we figure out some other stuff
-#select q.firstName as FirstName, q.lastName as LastName, count(a.assetCode) as NumOfAssets from Assets a join Portfolio p on a.portfolioCode=p.portfolioCode join Person q on q.personCode=p.ownerCode ;
+#12
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsOwned from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.ownerId where p.ownerId=1;
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsOwned from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.ownerId where p.ownerId=2;
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsOwned from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.ownerId where p.ownerId=3;
+
+#13
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsManaged from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.managerId where p.managerId=1;
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsManaged from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.managerId where p.managerId=2;
+select q.firstName as FirstName, q.lastName as LastName, count(a.assetListId=l.assetListId) as AssetsManaged from Portfolio p  join Assets a on a.portfolioId=p.portfolioId join AssetsList l on l.assetListId=a.assetListId join Person q on q.personId=p.managerId where p.managerId=3;
 
 commit;
