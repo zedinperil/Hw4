@@ -65,23 +65,28 @@ JOIN AssetsList L ON L.assetListId = a.assetListId where p.portfolioCode='PT001'
  select * from AssetsList;
 
 #10. A query to create a new portfolio record
+#A new portfolio for Redmond
  insert into Portfolio(portfolioId, portfolioCode, ownerId, managerId, beneficiaryId, fees, commissions, totalValue, sumOfAnnualReturns, aggRisk) values(7, 'PT007',1,2,3,0,0,0,0,0);
  select * from Portfolio;
 #11. A query to associate a particular asset with a particular portfolio
+#yo, just added an asset, and checked to show that its in that new portfolio we just made. It isn't worth anything though.
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(12,5,7, 12, 0, 0, 0, 0);
  select p.portfolioCode, l.assetCode, l.assetName from Portfolio p join Assets a on p.portfolioId=a.portfolioId join AssetsList l on a.assetListId=l.assetListId where p.portfolioCode='PT007';
 
 #12. A query to find the total number of portfolios owned by each person
+#self explanatory, just some joins and a grouping
  select q.firstName as FirstName, q.lastName as LastName, count(q.personId=p.ownerId) as PortfoliosOwned
  from Portfolio p  join Person q on q.personId=p.ownerId
  group by p.ownerId;
 
 #13. A query to find the total number of portfolios managed by each person
+ #self explanatory, same as above
  select q.firstName as FirstName, q.lastName as LastName, count(q.personId=p.managerId) as PortfoliosManaged
  from Portfolio p join Person q on q.personId=p.managerId
  group by p.managerId;
 
 #14. A query to find the total value of all stocks in each portfolio(Hint: you can take the "aggregate of" mathematical expression).
+#take the sums of all occurrances where the asset occurance within a portfolio has an asset in the assetlist that has it's type being "s", for stock. grouped so that all portfolios are listed.
  select p.portfolioCode as portfolio, sum(if(a.assetlistId=l.assetlistId and l.assetType='S',a.assetValue,0)) as TotalStockValues
  from Portfolio p join Assets a on p.portfolioId=a.portfolioId
  join AssetsList l on l.assetListId=a.assetListId
@@ -89,7 +94,17 @@ JOIN AssetsList L ON L.assetListId = a.assetListId where p.portfolioCode='PT001'
 
 #15. A query to detect an invalid distribution of private investment assets 
 #   (that is, a query to add up the stake percentage of each such asset and return a list of investment whose percentage exceeds 100%)
+# we create a new asset in the assetlist
+# we add two occurrances of this asset into the assets table, one which we know will bring to more than 100 percentage stake, for redmond mann's PT001, and one which will equal 100 exactly, in blutarch mann's PT002
+# then, we look for the sum of all asset occurances within each portfolio, and check the type of the asset occurrance within the asset list. If the type is 'p', then we add the asset modifier value of the asset occurrance to the sum.
+# this should return only one result, where redmond mann's PT001 has 104 percentage stake. 
  insert into AssetsList(assetListId, assetCode, assetType, assetName) values(6,'HOME','P','Homeboy Hoagies');
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(13,6,1, 92, 1.15, 18785.15, 109081.20, 17.22);
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(14,6,2, 92, 1.15, 18785.15, 109081.20, 17.22);
- select p.portfolioCode as portfolio, sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0)) as PercentStake, q.personCode as OwnerCode from Portfolio p join Assets a on p.portfolioId=a.portfolioId join AssetsList l on l.assetListId join Person q on q.personId=p.ownerId group by p.portfolioCode having sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0))>100;
+ select p.portfolioCode as portfolio, sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0)) as PercentStake, q.personCode as OwnerCode
+ from Portfolio p
+ join Assets a on p.portfolioId=a.portfolioId
+ join AssetsList l on l.assetListId
+ join Person q on q.personId=p.ownerId
+ group by p.portfolioCode
+ having sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0))>100;

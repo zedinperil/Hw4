@@ -1,5 +1,4 @@
 #Tyler Zinsmaster & Alex Chmelka
-use tzinsmaster;
 start transaction;
 
 #List for dropping tables, useful for testing puroses and reseting tables from querries
