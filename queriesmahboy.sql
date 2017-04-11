@@ -87,6 +87,15 @@ JOIN AssetsList L ON L.assetListId = a.assetListId where p.portfolioCode='PT001'
  join AssetsList l on l.assetListId=a.assetListId
  group by p.portfolioCode;
 
+
+select p.portfolioCode, p.portfolioId, q.personCode as OwnerCode, m.personCode as ManagerCode, b.personCode as BeneficiaryCode,s q.lastName as OwnerLastName, q.firstName as OwnerFirstName,
+				 m.lastName as ManagerLastName, m.firstName as ManagerFirstName, m.persontype as ManagerType, b.lastName as BeneficiaryLastName, b.firstName as BeneficiaryFirstName,
+				 p.fees, p.aggRisk, p.commissions, p.totalValue, p.sumOfAnnualReturns from Portfolio p
+				 join Person q on q.personId=p.ownerId join Person m on m.personId=p.managerId join Person b on b.personId=p.beneficiaryId;
+
+
+
+
 #15. A query to detect an invalid distribution of private investment assets 
 #   (that is, a query to add up the stake percentage of each such asset and return a list of investment whose percentage exceeds 100%)
  insert into AssetsList(assetListId, assetCode, assetType, assetName) values(6,'HOME','P','Homeboy Hoagies');

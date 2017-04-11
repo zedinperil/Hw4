@@ -1,6 +1,14 @@
 #Tyler Zinsmaster & Alex Chmelka
+use tzinsmaster;
 start transaction;
+select p.portfolioCode, p.portfolioId, q.personCode as OwnerCode, m.personCode as ManagerCode, b.personCode as BeneficiaryCode, q.lastName as OwnerLastName, q.firstName as OwnerFirstName,
+				 m.lastName as ManagerLastName, m.firstName as ManagerFirstName, m.persontype as ManagerType, b.lastName as BeneficiaryLastName, b.firstName as BeneficiaryFirstName,
+				 p.fees, p.aggRisk, p.commissions, p.totalValue, p.sumOfAnnualReturns from Portfolio p
+				 join Person q on q.personId=p.ownerId join Person m on m.personId=p.managerId join Person b on b.personId=p.beneficiaryId;
 
+
+select p.portfolioCode, L.assetCode, L.assetName, L.assetType, a.assetValue, a.returnRate, a.annualReturn, a.risk, a.assetModifier
+       from Assets a JOIN Portfolio p ON p.portfolioId = a.portfolioId JOIN AssetsList L ON L.assetListId = a.assetListId;
 #List for dropping tables, useful for testing puroses and reseting tables from querries
 drop table if exists Emails;
 drop table if exists PrivateInvestment;
@@ -94,33 +102,33 @@ create table Assets (
 
 #BIG NOTE: These tables are mostly legacy code. We have left them in for potential future expansion, as it would give us more data to work with.
 #We had a hard time finding use for the data in these tables, so we omitted them from use in our testing querries.  
-#create table PrivateInvestment (
-#  privateInvestmentId int not null primary key auto_increment,
-#  assetListId int not null,
-#  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
-#  quarterlyDividend double not null,
-#  baseRateOfReturn double not null,
-#  omegaMeasure double not null,
-#  pValue double not null
-#  );
+create table PrivateInvestment (
+  privateInvestmentId int not null primary key auto_increment,
+  assetListId int not null,
+  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
+  quarterlyDividend double not null,
+  baseRateOfReturn double not null,
+  omegaMeasure double not null,
+  pValue double not null
+  );
 
-#create table Stock (
-#  stockId int not null primary key auto_increment,
-#  assetListId int not null,
-#  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
-#  quarterlyDividend double not null,
-#  baseRateOfReturn double not null,
-#  betaMeasure double not null,
-#  stockSymbol varchar(10) not null,
-#  sharePrice double not null
-#  );
+create table Stock (
+  stockId int not null primary key auto_increment,
+  assetListId int not null,
+  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
+  quarterlyDividend double not null,
+  baseRateOfReturn double not null,
+  betaMeasure double not null,
+  stockSymbol varchar(10) not null,
+  sharePrice double not null
+  );
 
-#create table Deposit (
-#  depositId int not null primary key auto_increment,
-#  assetListId int not null,
-#  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
-#  apr double not null
-#  );
+create table Deposit (
+  depositId int not null primary key auto_increment,
+  assetListId int not null,
+  FOREIGN KEY (assetListId) REFERENCES AssetsList(assetListId),
+  apr double not null
+  );
   
   
 
@@ -161,12 +169,17 @@ create table Assets (
  insert into Assets(assetId, assetListId, portfolioId, assetModifier, risk, annualReturn, assetValue, returnRate) values(11,1,6, 10, 1.15, 15654.29, 90901.00, 17.22);
 
 
- #insert into PrivateInvestment(privateInvestmentId, assetListId, quarterlyDividend, baseRateOfReturn, omegaMeasure, pValue) values(1, 2, 32000, 0.314, 0.25, 909010);
+insert into PrivateInvestment(privateInvestmentId, assetListId, quarterlyDividend, baseRateOfReturn, omegaMeasure, pValue) values(1, 2, 32000, 0.314, 0.25, 909010);
  
- #insert into Stock(stockId, assetListId, quarterlyDividend, baseRateOfReturn, betaMeasure, stockSymbol, sharePrice) values(1, 1, 0.001, 0.000039, 9.015, 'GRVL', 0.004);
- #insert into Stock(stockId, assetListId, quarterlyDividend, baseRateOfReturn, betaMeasure, stockSymbol, sharePrice) values(2, 4, 3.14, 0.081999999999, 8.35, 'MANN', 145.93);
+insert into Stock(stockId, assetListId, quarterlyDividend, baseRateOfReturn, betaMeasure, stockSymbol, sharePrice) values(1, 1, 0.001, 0.000039, 9.015, 'GRVL', 0.004);
+insert into Stock(stockId, assetListId, quarterlyDividend, baseRateOfReturn, betaMeasure, stockSymbol, sharePrice) values(2, 4, 3.14, 0.081999999999, 8.35, 'MANN', 145.93);
 
- #insert into Deposit(depositId, assetListId, apr) values(1, 3, 0.0924);
+insert into Deposit(depositId, assetListId, apr) values(1, 3, 0.0924);
+
+select p.portfolioCode, p.portfolioId, q.personCode as OwnerCode, m.personCode as ManagerCode, b.personCode as BeneficiaryCode, q.lastName as OwnerLastName, q.firstName as OwnerFirstName,
+				 m.lastName as ManagerLastName, m.firstName as ManagerFirstName, m.persontype as ManagerType, b.lastName as BeneficiaryLastName, b.firstName as BeneficiaryFirstName,
+				 p.fees, p.aggRisk, p.commissions, p.totalValue, p.sumOfAnnualReturns from Portfolio p
+				 join Person q on q.personId=p.ownerId join Person m on m.personId=p.managerId join Person b on b.personId=p.beneficiaryId;
 
 
 commit;

@@ -108,3 +108,9 @@ JOIN AssetsList L ON L.assetListId = a.assetListId where p.portfolioCode='PT001'
  join Person q on q.personId=p.ownerId
  group by p.portfolioCode
  having sum(if(a.assetlistId=l.assetlistId and l.assetType='P',a.assetModifier,0))>100;
+ 
+ 
+ select count(*) from Assets;
+ 
+ select p.portfolioCode, p.portfolioId, p.ownerId, q.lastName as OwnerLastName, q.firstName as OwnerFirstName, m.lastName as ManagerLastName, m.firstName as ManagerFirstName, m.persontype, b.lastName as BeneficiaryLastName, b.firstName as BeneficiaryFirstName, p.managerId, p.beneficiaryId, p.fees, p.commissions, p.totalValue, p.sumOfAnnualReturns, p.aggRisk, L.assetCode, L.assetName, L.assetType, a.assetValue, a.returnRate, a.annualReturn, a.risk, a.assetModifier from Assets a JOIN Portfolio p ON p.portfolioId = a.portfolioId
+JOIN AssetsList L ON L.assetListId = a.assetListId Join Person q on q.personId=p.ownerId join Person m on m.personId=p.managerId join Person b on b.personId=p.beneficiaryId;
